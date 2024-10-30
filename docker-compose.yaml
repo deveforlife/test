@@ -17,6 +17,21 @@ services:
 #      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
 #    networks:
 #      - default
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+      - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '5432:5432'
+    networks:
+      - default
 
   backend-fasep:
     container_name: backend-fasep
@@ -31,3 +46,7 @@ services:
 networks:
   default:
     name: backend-fasep
+    driver: bridge
+
+volumes:
+  postgres:

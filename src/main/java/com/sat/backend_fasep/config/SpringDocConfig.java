@@ -1,4 +1,3 @@
-/*
 package com.sat.backend_fasep.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -38,4 +37,3 @@ public class SpringDocConfig {
                         .license(new License().name("Apache 2.0").url("https://springdoc.org")));
     }
 }
-*/

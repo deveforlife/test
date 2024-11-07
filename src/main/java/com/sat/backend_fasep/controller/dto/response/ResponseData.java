@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.dto.response;
+package com.sat.backend_fasep.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;

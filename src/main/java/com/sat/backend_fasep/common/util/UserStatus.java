@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.util;
+package com.sat.backend_fasep.common.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,6 +6,9 @@ public enum UserStatus {
     @JsonProperty("active") // Allow lowercase values
     ACTIVE,
 
-    @JsonProperty("inactive") // Allow lowercase values
-    INACTIVE
+    @JsonProperty("suspended") // Allow lowercase values
+    SUSPENDED,
+
+    @JsonProperty("closed") // Allow lowercase values
+    CLOSED
 }

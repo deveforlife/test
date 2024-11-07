@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.dto.request;
+package com.sat.backend_fasep.controller.dto.request;
 
 import java.io.Serializable;
 

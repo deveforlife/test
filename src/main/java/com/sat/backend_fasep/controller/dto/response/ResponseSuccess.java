@@ -1,6 +1,5 @@
-package com.sat.backend_fasep.dto.response;
+package com.sat.backend_fasep.controller.dto.response;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;

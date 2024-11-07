@@ -1,14 +1,15 @@
 package com.sat.backend_fasep.controller;
 
-import com.sat.backend_fasep.dto.request.MerchantRequestDTO;
-import com.sat.backend_fasep.dto.response.ResponseData;
-import com.sat.backend_fasep.dto.response.ResponseError;
+//import com.sat.backend_fasep.configuration.Translator;
+import com.sat.backend_fasep.controller.dto.request.MerchantRequestDTO;
+import com.sat.backend_fasep.controller.dto.response.ResponseData;
+import com.sat.backend_fasep.controller.dto.response.ResponseError;
 import com.sat.backend_fasep.service.IMerchantService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +29,19 @@ public class MerchantController {
     private final IMerchantService merchantService;
 
     /**
-     * add, create merchant
+     * Merchant account registration
      */
 
+    @Operation(method = "POST", summary = "Merchant account registration", description = "Send a reqest via this API to create new merchant")
     @PostMapping(value = "/") // headers = "apiKey=v1.0") for mobile
-    public ResponseData<Integer> addMerchant(@Valid @RequestBody MerchantRequestDTO merchantDTO){
-        log.info("Request create merchant = { " + merchantDTO.getMerchantName()+ " }");
+    public ResponseData<Long> addMerchant(@Valid @RequestBody MerchantRequestDTO merchantDTO){
+        log.info("Request create merchant, {}", merchantDTO.getMerchantName());
         try {
-            merchantService.addMerchant(merchantDTO);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Merchant added successfully", 1);
+            long merchantId = merchantService.saveMerchant(merchantDTO);
+            return new ResponseData<>(HttpStatus.CREATED.value(), "merchant.add.success", merchantId);
         } catch (Exception e) {
-            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Save merchant fail");
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Create merchant fail");
         }
     }
 

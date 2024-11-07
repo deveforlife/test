@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.util;
+package com.sat.backend_fasep.common.util;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

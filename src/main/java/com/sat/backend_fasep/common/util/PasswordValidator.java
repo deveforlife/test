@@ -1,9 +1,7 @@
-package com.sat.backend_fasep.util;
+package com.sat.backend_fasep.common.util;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
-import java.lang.annotation.Annotation;
 
 public class PasswordValidator implements ConstraintValidator<Password, String> {
     @Override

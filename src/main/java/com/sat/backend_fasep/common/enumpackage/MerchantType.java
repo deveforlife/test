@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.common.util;
+package com.sat.backend_fasep.common.enumpackage;
 
 public enum MerchantType {
     INDIVIDUAL, // individual customer

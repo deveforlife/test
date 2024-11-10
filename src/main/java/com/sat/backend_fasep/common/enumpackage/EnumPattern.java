@@ -1,4 +1,4 @@
-package com.sat.backend_fasep.common.util;
+package com.sat.backend_fasep.common.enumpackage;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

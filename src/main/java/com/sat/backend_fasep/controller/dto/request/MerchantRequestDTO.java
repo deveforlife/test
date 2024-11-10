@@ -1,6 +1,8 @@
 package com.sat.backend_fasep.controller.dto.request;
 
-import com.sat.backend_fasep.common.util.*;
+import com.sat.backend_fasep.common.enumpackage.EnumPattern;
+import com.sat.backend_fasep.common.enumpackage.UserStatus;
+import com.sat.backend_fasep.common.annocustom.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 
@@ -22,26 +24,11 @@ public class MerchantRequestDTO implements Serializable {
     @Email
     private String email;
 
-    @NotBlank(message = "username must be not blank") // không cho phép null, empty, khoảng trắng
-    @Size(min = 3, max = 25, message = "username must contain at least 3 characters and maximum 25 characters.")
+    @Username
     private String username;
 
     @Password
     private String password;
-
-    // Declare merchant's private information
-    private String alias;
-    private String gaKey;
-    private Double balance;
-
-    // Declare API Integration Information
-    private String merchantCode;
-    private String secretKey;
-    private String ipApiRegistration;
-
-    // Declare information for management
-    private Integer user_id_created;
-    private Integer user_id_updated;
 
     @EnumPattern(name = "userStatus", regexp = "ACTIVE|SUSPENDED|CLOSED")
     private UserStatus userStatus;

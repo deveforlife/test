@@ -2,6 +2,8 @@ package com.sat.backend_fasep.controller;
 
 //import com.sat.backend_fasep.configuration.Translator;
 import com.sat.backend_fasep.controller.dto.request.MerchantRequestDTO;
+import com.sat.backend_fasep.controller.dto.response.MerchantDetailResponse;
+import com.sat.backend_fasep.controller.dto.response.ResetPasswordMerchantForAdminResponse;
 import com.sat.backend_fasep.controller.dto.response.ResponseData;
 import com.sat.backend_fasep.controller.dto.response.ResponseError;
 import com.sat.backend_fasep.service.IMerchantService;
@@ -46,7 +48,7 @@ public class MerchantController {
     }
 
     /**
-     * 2
+     *
      */
 
     @PutMapping("/{id}")
@@ -57,7 +59,6 @@ public class MerchantController {
     }
 
     /**
-     * 3
      * ? method patch có cần chỉ định rõ field cần cập nhật hay không
      *
      */
@@ -68,12 +69,81 @@ public class MerchantController {
     }
 
     /**
+     *
+     *
+     */
+    @PatchMapping("/add-balance/{id}")
+    public ResponseData<?> addBalance(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam Double amount){
+        log.info("Request add merchant balance, merchant ID = {}" + id);
+
+        try {
+            merchantService.addMerchantBalance(id, amount);
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Balance changed");
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+    /**
+     *
+     *
+     */
+    @PatchMapping("/deduct-balance/{id}")
+    public ResponseData<?> deductBalance(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam Double amount){
+        log.info("Request deduct merchant balance, merchant ID={}",id);
+
+        try {
+            merchantService.deductMerchantBalance(id, amount);
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Balance changed");
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+    /**
+     * ? method change alias name only for Administrator, Manager
+     *
+     */
+    @PatchMapping("/change-alias-name/{id}")
+    public ResponseData<?> changeAliasNameOfMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam String newAliasName){
+        log.info("Request change merchant alias name, merchant ID = {}" + id);
+
+        try {
+            merchantService.changeAliasName(id, newAliasName);
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Merchant alias name changed successful");
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+    /**
+     * ? method reset password merchant for Administrator
+     *
+     */
+    @PatchMapping("/reset-password/{id}")
+    public ResponseData<ResetPasswordMerchantForAdminResponse> resetPasswordMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id ){
+        log.info("Request reset password for merchant, merchant ID = {}" + id);
+
+        try {
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Merchant password reset successful", merchantService.resetPassword(id));
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+
+    /**
      * 4
      *
      */
     @DeleteMapping("/{id}")
     public ResponseData<?> deleteMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id){
         log.info("Request delete merchant, merchant ID = {}" + id);
+
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Merchant deleted ");
     }
 
@@ -82,13 +152,15 @@ public class MerchantController {
      *
      */
     @GetMapping("/{id}")
-    public ResponseData<MerchantRequestDTO> getMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id){
+    public ResponseData<MerchantDetailResponse> getMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id){
         log.info("Request get detail merchant by ID = {}" + id);
-        return new ResponseData<>(HttpStatus.OK.value(), "Merchant",
-                new MerchantRequestDTO("username1",
-                        "password1",
-                        "merchantName1",
-                        "email1"));
+
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Merchant", merchantService.getMerchant(id));
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
     }
 
     /**
@@ -96,14 +168,17 @@ public class MerchantController {
      *
      */
     @GetMapping("/list")
-    public ResponseData<List<MerchantRequestDTO>> getAllMerchant(
+    public ResponseData<List<MerchantDetailResponse>> getAllMerchant(
             @RequestParam(defaultValue = "0") int pageNo,
             @RequestParam(defaultValue = "10") int pageSize){
         log.info("Request get all merchant");
-        return new ResponseData<>(HttpStatus.OK.value(), "Merchant list",
-                List.of(
-                        new MerchantRequestDTO("username1","password1", "merchantName1", "email1"),
-                new MerchantRequestDTO("username2","password2", "merchantName2", "email2")));
+
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Merchant list",merchantService.getAllMerchant(pageNo, pageSize));
+        } catch (Exception e) {
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
     }
 
 

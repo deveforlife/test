@@ -6,13 +6,16 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "merchant")
-public class MerchantEntity extends BaseUserEntity {
+public class MerchantEntity extends BaseEntity {
 
     @Column(name = "alias_name")
     private String aliasName;
@@ -47,5 +50,9 @@ public class MerchantEntity extends BaseUserEntity {
 
     @Column(name = "ip_address")
     private String ipAddress;
+
+    //
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "merchantEntity")
+    private Set<WithdrawBank> withdrawBank = new HashSet<>();
 }
 

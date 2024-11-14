@@ -3,13 +3,16 @@ package com.sat.backend_fasep.service.impl;
 import com.sat.backend_fasep.common.GeneratePasswordWithRegex;
 import com.sat.backend_fasep.common.enumpackage.UserStatus;
 import com.sat.backend_fasep.controller.dto.request.MerchantRequestDTO;
+import com.sat.backend_fasep.controller.dto.request.WithdrawBankRequestDTO;
 import com.sat.backend_fasep.controller.dto.response.MerchantDetailResponse;
 import com.sat.backend_fasep.controller.dto.response.ResetPasswordMerchantForAdminResponse;
 import com.sat.backend_fasep.exception.ResourceNotFoundException;
 import com.sat.backend_fasep.model.MerchantEntity;
+import com.sat.backend_fasep.model.WithdrawBank;
 import com.sat.backend_fasep.repository.MerchantRepository;
 import com.sat.backend_fasep.service.IMerchantService;
 import lombok.RequiredArgsConstructor;
+import lombok.With;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.domain.Page;
@@ -17,7 +20,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -198,5 +203,23 @@ public class MerchantServiceImpl implements IMerchantService {
     private String GenerateUserId() {
         String characters = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789";
         return RandomStringUtils.random( 20, characters );
+    }
+
+    /**
+     * Convert Set<AddressDTO> to Set<Address>
+     *
+     * @param
+     * @return
+     */
+    private Set<WithdrawBank> convertToWithdrawBank(Set<WithdrawBankRequestDTO> withdrawBanks) {
+        Set<WithdrawBank> result = new HashSet<>();
+        withdrawBanks.forEach(a ->
+                result.add(WithdrawBank.builder()
+                            .bankName(a.getBankName())
+                            .holderAccount(a.getHolderAccount())
+                            .numberAccount(a.getNumberAccount())
+                        .build())
+        );
+        return result;
     }
 }

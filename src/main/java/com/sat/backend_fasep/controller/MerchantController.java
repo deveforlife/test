@@ -52,7 +52,7 @@ public class MerchantController {
      */
 
     @PutMapping("/{id}")
-    public ResponseData<?> updateMerchantAll(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id,
+    public ResponseData<?> updateMerchantAll(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id,
                                              @Valid @RequestBody MerchantRequestDTO merchantDTO){
         log.info("Request update merchant ID = {}" + id);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Merchant updated successfully");
@@ -63,7 +63,7 @@ public class MerchantController {
      *
      */
     @PatchMapping("/{id}")
-    public ResponseData<?> updateMerchantStatus(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam int status){
+    public ResponseData<?> updateMerchantStatus(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id , @RequestParam int status){
         log.info("Request update merchant status, merchant ID = {}" + id);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Merchant status changed ");
     }
@@ -73,7 +73,7 @@ public class MerchantController {
      *
      */
     @PatchMapping("/add-balance/{id}")
-    public ResponseData<?> addBalance(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam Double amount){
+    public ResponseData<?> addBalance(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id , @RequestParam Double amount){
         log.info("Request add merchant balance, merchant ID = {}" + id);
 
         try {
@@ -90,7 +90,7 @@ public class MerchantController {
      *
      */
     @PatchMapping("/deduct-balance/{id}")
-    public ResponseData<?> deductBalance(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam Double amount){
+    public ResponseData<?> deductBalance(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id , @RequestParam Double amount){
         log.info("Request deduct merchant balance, merchant ID={}",id);
 
         try {
@@ -107,7 +107,8 @@ public class MerchantController {
      *
      */
     @PatchMapping("/change-alias-name/{id}")
-    public ResponseData<?> changeAliasNameOfMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id , @RequestParam String newAliasName){
+    public ResponseData<?> changeAliasNameOfMerchant(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id ,
+                                                     @RequestParam String newAliasName){
         log.info("Request change merchant alias name, merchant ID = {}" + id);
 
         try {
@@ -124,7 +125,8 @@ public class MerchantController {
      *
      */
     @PatchMapping("/reset-password/{id}")
-    public ResponseData<ResetPasswordMerchantForAdminResponse> resetPasswordMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id ){
+    public ResponseData<ResetPasswordMerchantForAdminResponse> resetPasswordMerchant(@PathVariable @Min(value = 1,
+                                                message = "merchantId must be greater than 0") int id ){
         log.info("Request reset password for merchant, merchant ID = {}" + id);
 
         try {
@@ -141,8 +143,8 @@ public class MerchantController {
      *
      */
     @DeleteMapping("/{id}")
-    public ResponseData<?> deleteMerchant(@PathVariable @Min(value = 1, message = "userId must be greater than 0") int id){
-        log.info("Request delete merchant, merchant ID = {}" + id);
+    public ResponseData<?> deleteMerchant(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id){
+        log.info("Request to delete merchant withdrawal account, id={}" + id);
 
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Merchant deleted ");
     }

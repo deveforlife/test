@@ -9,13 +9,13 @@ public interface IWithdrawBankService {
 
     long saveWithdrawBank(long merchantId, WithdrawBankRequestDTO request);
 
-    void updateWithdrawBank(long merchantId, WithdrawBankRequestDTO request);
+    void updateWithdrawBank(long merchantId,long withdrawBankId, WithdrawBankRequestDTO request);
 
     // void changeStatus(long merchantId, UserStatus status);
 
-    void deleteWithdrawBank(long merchantId);
+    void deleteWithdrawBank(long merchantId, long withdrawBankId);
 
-    WithdrawBankDetailResponse getWithdrawBank(long merchantId);
+    List<WithdrawBankDetailResponse> getWithdrawBank(long merchantId);
 
     List<WithdrawBankDetailResponse> getAllWithdrawBank(int pageNo, int pageSize);
 }

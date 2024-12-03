@@ -170,6 +170,7 @@ public class MerchantServiceImpl implements IMerchantService {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<MerchantEntity> merchants = merchantRepository.findAll(pageable);
 
+        // Check if merchant list is empty
         if (merchants.getTotalElements() == 0) {
             log.info("------> merchant list = {}", merchants.getTotalElements());
 
@@ -189,7 +190,7 @@ public class MerchantServiceImpl implements IMerchantService {
     }
 
     // other methods to handle business
-    private MerchantEntity getMerchantId(long merchantId){
+    protected MerchantEntity getMerchantId(long merchantId){
         return merchantRepository.findById(merchantId).orElseThrow(() -> new ResourceNotFoundException("Merchant not found"));
     }
 
@@ -211,7 +212,7 @@ public class MerchantServiceImpl implements IMerchantService {
      * @param
      * @return
      */
-    private Set<WithdrawBank> convertToWithdrawBank(Set<WithdrawBankRequestDTO> withdrawBanks) {
+/*    private Set<WithdrawBank> convertToWithdrawBank(Set<WithdrawBankRequestDTO> withdrawBanks) {
         Set<WithdrawBank> result = new HashSet<>();
         withdrawBanks.forEach(a ->
                 result.add(WithdrawBank.builder()
@@ -221,5 +222,5 @@ public class MerchantServiceImpl implements IMerchantService {
                         .build())
         );
         return result;
-    }
+    }*/
 }

@@ -11,7 +11,8 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "withdraw_bank")
+@Entity
+@Table(name = "withdraw_bank")
 public class WithdrawBank extends BaseEntity {
 
     @Column(name = "bank_name")
@@ -23,7 +24,10 @@ public class WithdrawBank extends BaseEntity {
     @Column(name = "number_account")
     private String numberAccount;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "merchant_id")
-    private MerchantEntity merchantEntity;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "merchant_id")
+//    private MerchantEntity merchantId;
+    @Column(name = "merchant_id")
+    private Long merchantId;
+
 }

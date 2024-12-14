@@ -14,7 +14,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "merchant")
+@Entity
+@Table(name = "merchant")
 public class MerchantEntity extends BaseEntity {
 
     @Column(name = "alias_name")
@@ -52,7 +53,7 @@ public class MerchantEntity extends BaseEntity {
     private String ipAddress;
 
     //
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "merchantEntity")
-    private Set<WithdrawBank> withdrawBank = new HashSet<>();
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "merchantId")
+//    private Set<WithdrawBank> withdrawBank = new HashSet<>();
 }
 

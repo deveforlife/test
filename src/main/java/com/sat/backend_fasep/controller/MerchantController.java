@@ -145,7 +145,7 @@ public class MerchantController {
     @DeleteMapping("/{id}")
     public ResponseData<?> deleteMerchant(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id){
         log.info("Request to delete merchant withdrawal account, id={}" + id);
-
+        merchantService.deleteMerchant(id);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Merchant deleted ");
     }
 

@@ -189,7 +189,7 @@ public class MerchantServiceImpl implements IMerchantService {
         }
     }
 
-    // other methods to handle business
+    // ------------------------ other methods to handle business --------------------------------
     protected MerchantEntity getMerchantId(long merchantId){
         return merchantRepository.findById(merchantId).orElseThrow(() -> new ResourceNotFoundException("Merchant not found"));
     }

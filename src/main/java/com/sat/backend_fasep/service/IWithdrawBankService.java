@@ -15,7 +15,7 @@ public interface IWithdrawBankService {
 
     void deleteWithdrawBank(long merchantId, long withdrawBankId);
 
-    List<WithdrawBankDetailResponse> getWithdrawBank(long merchantId);
+    WithdrawBankDetailResponse getWithdrawBank(long merchantId, int pageNo, int pageSize);
 
-    List<WithdrawBankDetailResponse> getAllWithdrawBank(int pageNo, int pageSize);
+    //List<WithdrawBankDetailResponse> getAllWithdrawBank(int pageNo, int pageSize);
 }

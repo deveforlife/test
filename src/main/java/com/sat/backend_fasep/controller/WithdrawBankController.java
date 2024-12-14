@@ -27,13 +27,13 @@ public class WithdrawBankController {
      *
      */
     @Operation(method = "POST", summary = "Add bank account withdraw", description = "Merchant register bank account withdraw money")
-    @PostMapping("/{id}")
-    public ResponseData<Long> addWithdrawBank(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id,
+    @PostMapping("/{merchantId}")
+    public ResponseData<Long> addWithdrawBank(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") long merchantId,
                                               @Valid @RequestBody WithdrawBankRequestDTO withdrawBankDTO){
-        log.info("Request to register a merchant withdrawal account, merchantId={}", id);
+        log.info("Request to register a merchant withdrawal account, merchantId={}", merchantId);
 
         try {
-            long withdrawBankId = withdrawBankService.saveWithdrawBank(id, withdrawBankDTO);
+            long withdrawBankId = withdrawBankService.saveWithdrawBank(merchantId, withdrawBankDTO);
             return new ResponseData<>(HttpStatus.CREATED.value(), "withdrawBank.add.success", withdrawBankId);
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -47,8 +47,8 @@ public class WithdrawBankController {
      */
     @Operation(method = "PUT", summary = "Edit bank account withdraw", description = "Merchant edit bank account withdraw money")
     @PutMapping("/update")
-    public ResponseData<?> updateWithdrawBank(@RequestParam @Min(value = 1, message = "merchantId must be greater than 0") int merchantId,
-                                              @RequestParam @Min(value = 1, message = "withdrawBankId must be greater than 0") int withdrawBankId,
+    public ResponseData<?> updateWithdrawBank(@RequestParam @Min(value = 1, message = "merchantId must be greater than 0") long merchantId,
+                                              @RequestParam @Min(value = 1, message = "withdrawBankId must be greater than 0") long withdrawBankId,
                                               @Valid @RequestBody WithdrawBankRequestDTO withdrawBankDTO){
 
         log.info("Request to edit withdrawal bank account, merchantId={}", merchantId);
@@ -67,10 +67,11 @@ public class WithdrawBankController {
      * get merchant bank
      *
      */
-    @DeleteMapping("/{id}")
-    public ResponseData<?> deleteWithdrawBank(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id){
-        log.info("Request get detail merchant by ID = {}" + id);
-
+    @DeleteMapping("/{withdrawBankId}")
+    public ResponseData<?> deleteWithdrawBank(@RequestParam @Min(value = 1, message = "merchantId must be greater than 0") long merchantId,
+                                              @PathVariable @Min(value = 1, message = "withdrawBankId must be greater than 0") long withdrawBankId){
+        log.info("Request delete withdraw bank id = {}", withdrawBankId, " of merchant by ID = {}" + merchantId);
+        withdrawBankService.deleteWithdrawBank(merchantId,withdrawBankId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Withdrawal account has been deleted successfully");
     }
 
@@ -78,11 +79,18 @@ public class WithdrawBankController {
      * get merchant bank
      *
      */
-    @GetMapping("/{id}")
-    public ResponseData<WithdrawBankRequestDTO> getWithdrawBank(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") int id){
-        log.info("Request get detail merchant by ID = {}" + id);
+    @GetMapping("/list/{merchantId}")
+    public ResponseData<?> getWithdrawBankOfMerchantId(@PathVariable @Min(value = 1, message = "merchantId must be greater than 0") long merchantId,
+                                           @RequestParam(defaultValue = "0") int pageNo,
+                                           @RequestParam(defaultValue = "10") int pageSize){
+        log.info("Request get all withdraw bank of merchant ID = {}" + merchantId);
 
-        return new ResponseData<>(1,"bank", new WithdrawBankRequestDTO("ACB","123","AAA"));
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(),"Withdraw bank list", withdrawBankService.getWithdrawBank(merchantId, pageNo, pageSize));
+        }catch (Exception e){
+            log.error("errorMessage={}", e.getMessage(), e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
     }
 
     /*
@@ -91,12 +99,6 @@ public class WithdrawBankController {
      */
     @GetMapping("/list")
     public ResponseData<?> getAllWithdrawBank(@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize){
-
-
-
-
-
-
         return new ResponseData<>(1,"");
     }
 

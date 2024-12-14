@@ -1,16 +1,14 @@
 package com.sat.backend_fasep.repository;
 
+import com.sat.backend_fasep.model.Channel;
 import com.sat.backend_fasep.model.WithdrawBank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-// @query -> native SQL & hibanate SQL
-//
-
 @Repository
-public interface WithdrawBankRepository extends JpaRepository<WithdrawBank, Long> {
+public interface ChannelRepository extends JpaRepository<Channel, Long> {
 
-    List<WithdrawBank> findByMerchantId(Long id);
+    List<Channel> findByMerchantId(Long id);
 }

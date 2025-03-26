@@ -1,0 +1,78 @@
+Cấu Trúc Dự Án Spring Boot Hiện Đại (2025)
+
+my-spring-boot-project/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/yourcompany/projectname/
+│   │   │       ├── config/               # Các lớp cấu hình
+│   │   │       │   ├── SecurityConfig.java
+│   │   │       │   ├── WebConfig.java
+│   │   │       │   └── SwaggerConfig.java
+│   │   │       │
+│   │   │       ├── controller/            # Các controller REST API
+│   │   │       │   ├── UserController.java
+│   │   │       │   └── AuthController.java
+│   │   │       │
+│   │   │       ├── service/               # Các lớp service
+│   │   │       │   ├── UserService.java
+│   │   │       │   ├── AuthService.java
+│   │   │       │   └── impl/              # Các implementation của service
+│   │   │       │       ├── UserServiceImpl.java
+│   │   │       │       └── AuthServiceImpl.java
+│   │   │       │
+│   │   │       ├── repository/            # Interface JPA Repository
+│   │   │       │   ├── UserRepository.java
+│   │   │       │   └── RoleRepository.java
+│   │   │       │
+│   │   │       ├── model/                 # Các entity/domain
+│   │   │       │   ├── User.java
+│   │   │       │   ├── Role.java
+│   │   │       │   └── dto/               # Data Transfer Objects
+│   │   │       │       ├── UserDTO.java
+│   │   │       │       └── AuthRequestDTO.java
+│   │   │       │
+│   │   │       ├── security/              # Các lớp bảo mật
+│   │   │       │   ├── JwtTokenProvider.java
+│   │   │       │   └── UserDetailsServiceImpl.java
+│   │   │       │
+│   │   │       ├── exception/             # Xử lý ngoại lệ
+│   │   │       │   ├── GlobalExceptionHandler.java
+│   │   │       │   ├── ResourceNotFoundException.java
+│   │   │       │   └── ValidationErrorResponse.java
+│   │   │       │
+│   │   │       └── util/                  # Các lớp tiện ích
+│   │   │           ├── Constants.java
+│   │   │           └── DateTimeUtils.java
+│   │   │
+│   │   ├── resources/
+│   │   │   ├── application.yml            # Cấu hình chính
+│   │   │   ├── application-dev.yml        # Cấu hình môi trường dev
+│   │   │   ├── application-prod.yml       # Cấu hình môi trường production
+│   │   │   └── log4j2.xml                 # Cấu hình logging
+│   │   │
+│   │   └── docker/
+│   │       ├── Dockerfile                 # Docker configuration
+│   │       └── docker-compose.yml         # Docker compose configuration
+│   │
+│   └── test/
+│       ├── java/                          # Các test case
+│       │   └── com/yourcompany/projectname/
+│       │       ├── controller/
+│       │       ├── service/
+│       │       └── repository/
+│       │
+│       └── resources/
+│           └── application-test.yml       # Cấu hình môi trường test
+│
+├── gradle/                                # Wrapper Gradle
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+│
+├── .gitignore
+├── build.gradle                           # Gradle build configuration
+├── settings.gradle
+├── README.md
+└── lombok.config                          # Cấu hình Lombok
